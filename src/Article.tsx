@@ -7,6 +7,7 @@ import AuthorImage from "./components/AuthorImage";
 import FavoriteButton from "./components/FavoriteButton";
 import FollowButton from "./components/FollowButton";
 import Layout from "./components/Layout";
+import { PLACEHOLDER_IMAGE } from "./constants";
 import { formatArticleDate } from "./utils/date";
 import { markdownToHtml } from "./utils/markdown";
 
@@ -124,7 +125,7 @@ export default function ArticlePage(): JSX.Element {
                     </div>
                     <div className="card-footer">
                       <a href="/#/profile/jacobschmidt" className="comment-author">
-                        <img src="http://i.imgur.com/Qr71crq.jpg" className="comment-author-img" alt="Jacob Schmidt" />
+                        <img src={PLACEHOLDER_IMAGE} className="comment-author-img" alt="Jacob Schmidt" />
                       </a>
                       &nbsp;
                       <a href="/#/profile/jacobschmidt" className="comment-author">
@@ -140,7 +141,7 @@ export default function ArticlePage(): JSX.Element {
                     </div>
                     <div className="card-footer">
                       <a href="/#/profile/jacobschmidt" className="comment-author">
-                        <img src="http://i.imgur.com/Qr71crq.jpg" className="comment-author-img" alt="Jacob Schmidt" />
+                        <img src={PLACEHOLDER_IMAGE} className="comment-author-img" alt="Jacob Schmidt" />
                       </a>
                       &nbsp;
                       <a href="/#/profile/jacobschmidt" className="comment-author">

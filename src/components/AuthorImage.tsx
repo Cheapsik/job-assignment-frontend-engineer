@@ -1,4 +1,4 @@
-const PLACEHOLDER_IMAGE = "http://i.imgur.com/Qr71crq.jpg";
+import { PLACEHOLDER_IMAGE } from "../constants";
 
 type AuthorImageProps = {
   src?: string | null;
