@@ -1,6 +1,10 @@
-const API_URL = process.env.REACT_APP_API_URL
+const API_URL = process.env.REACT_APP_API_URL;
 
 type TokenGetter = () => string | null;
+
+type ErrorBody = {
+  errors?: Record<string, string[]>;
+};
 
 let authTokenGetter: TokenGetter = () => null;
 
@@ -25,19 +29,8 @@ export class ApiError extends Error {
   }
 }
 
-function isErrorBody(data: unknown): data is { errors: Record<string, string[]> } {
-  if (typeof data !== "object" || data === null || !("errors" in data)) {
-    return false;
-  }
-  const { errors } = data as { errors: unknown };
-  return typeof errors === "object" && errors !== null;
-}
-
-function readErrorPayload(data: unknown): Record<string, string[]> {
-  if (isErrorBody(data)) {
-    return data.errors;
-  }
-  return { body: ["Request failed"] };
+function readErrorPayload(data: ErrorBody): Record<string, string[]> {
+  return data.errors ?? { body: ["Request failed"] };
 }
 
 export async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
@@ -57,16 +50,16 @@ export async function request<T>(path: string, options: RequestInit = {}): Promi
     headers,
   });
 
-  let data: unknown = {};
+  let data: T & ErrorBody;
   try {
     data = await response.json();
-  } catch {
-    data = {};
+  } catch (error) {
+    throw new ApiError(response.status, { body: ["Request failed"] });
   }
 
   if (!response.ok) {
     throw new ApiError(response.status, readErrorPayload(data));
   }
 
-  return data as T;
+  return data;
 }
